@@ -159,13 +159,13 @@
       </p>
 
       <div class="buttons">
-        <button class="primary" onclick="alert('Student login will be connected next.')">
-          Student Login
-        </button>
+       <button class="primary" onclick="studentLogin()">
+    Student Login
+</button>
 
-        <button class="secondary" onclick="alert('Admin login will be connected next.')">
-          Admin Login
-        </button>
+<button class="secondary" onclick="adminLogin()">
+    Admin Login
+</button>
       </div>
     </section>
 
@@ -213,6 +213,56 @@
   <footer>
     © 2026 StethoPath · Mentorship Portal
   </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://syjqmevxmgaxctatbls.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_9UtnDOIdoAKCKa3mHjRJiw_J3fKmGJv";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+async function studentLogin() {
+    const email = prompt("Enter your registered student email:");
+    if (!email) return;
+
+    const password = prompt("Enter your password:");
+    if (!password) return;
+
+    const { error } = await supabaseClient.auth.signInWithPassword({
+        email: email.trim(),
+        password: password
+    });
+
+    if (error) {
+        alert("Login failed: " + error.message);
+        return;
+    }
+
+    alert("Student login successful.");
+}
+
+async function adminLogin() {
+    const email = prompt("Enter your admin email:");
+    if (!email) return;
+
+    const password = prompt("Enter your password:");
+    if (!password) return;
+
+    const { error } = await supabaseClient.auth.signInWithPassword({
+        email: email.trim(),
+        password: password
+    });
+
+    if (error) {
+        alert("Login failed: " + error.message);
+        return;
+    }
+
+    alert("Admin login successful.");
+}
+</script>
 </body>
 </html>
